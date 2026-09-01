@@ -7,21 +7,7 @@ GitHub Actions CI/CD pipeline.
 
 ## Architecture
 
-```
-Client -> API Gateway (HTTP API) -> CRUD Lambda -> DynamoDB
-                                          |
-                                          v
-                                    SNS topic (task-events)
-                                          |
-                                          v
-                              SQS queue (+ DLQ, 3 retries)
-                                          |
-                                          v
-                                    Notify Lambda -> Slack
-
-CloudWatch Alarms (Lambda errors, DLQ depth, API 5xx)
-    -> SNS topic (infra-alerts) -> Alert Lambda -> Slack
-```
+![Task Notes API architecture diagram](docs/task-architecture.drawio.png)
 
 **Request path (synchronous):** a client calls the HTTP API, API Gateway
 invokes the matching Lambda with a proxy integration, the Lambda reads/writes
